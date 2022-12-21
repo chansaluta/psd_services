@@ -6,3 +6,8 @@ def index(request):
     template = "sfp/index.html"
 
     return render(request, template)
+
+def dashboard(request):
+    template = "sfp/pages/dashboard.html"
+
+    return render(request, template)
