@@ -6,3 +6,9 @@ def index(request):
     template = "mta/index.html"
 
     return render(request, template)
+
+
+def dashboard(request):
+    template = "mta/pages/dashboard.html"
+
+    return render(request, template)
