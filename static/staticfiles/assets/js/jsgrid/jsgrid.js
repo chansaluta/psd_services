@@ -13,11 +13,20 @@
         deleteConfirm: "Do you really want to delete the client?",
         controller: db,
         fields: [
-        { name: "Name", type: "text", width: 150 },
-        { name: "Age", type: "number", width: 50 },
-        { name: "Address", type: "text", width: 200 },
-        { name: "Country", type: "select", items: db.countries, valueField: "Id", textField: "Name" },
-        { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
+   
+        { name: "Address of Location of Child's Residence", type: "text", width: 50 },
+        { name: "Name of Mother", type: "text", width: 50 },
+        { name: "Belongs to IP Group?", items: db.ip, valueField: "id", textField: "Name", type: "select", width: 20 },
+        { name: "Sex", items: db.sex, valueField: "id", textField: "Name", type: "select", width: 20 },
+        { name: "Date of Birth", type: "text", width: 50 },
+        { name: "Date Measured", type: "text", width: 50 },
+        { name: "Weight (kg)", type: "text", width: 20 },
+        { name: "Height (cm)", type: "text", width: 20 },
+        { name: "Age in Months", type: "text", width: 30 },
+        { name: "Weight for Age Status", type: "text", width: 30 },
+        { name: "Height for Age Status", type: "text", width: 30 },
+        { name: "Weight for Lt/Ht Status", type: "text", width: 30 },
+      
         { type: "control" }
         ]
     });
