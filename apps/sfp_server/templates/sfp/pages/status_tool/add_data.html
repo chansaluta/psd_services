@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+   
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <title>PSD Services - SFP | Nutritional Status Add Data </title>
+    {% include '../../inc/include_css.html' %}
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/jsgrid.css' %}">
+  </head>
+  <body>
+    {% block body_block %}
+    <div class="loader-wrapper">
+      <div class="loader-index"><span></span></div>
+      <svg>
+        <defs></defs>
+        <filter id="goo">
+          <fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
+          <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
+        </filter>
+      </svg>
+    </div>
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        {% include '../../layouts/header.html' %}
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        {% include '../../layouts/sidebar.html' %}
+
+        
+        <div class="page-body">
+          <div class="container-fluid">        
+            <div class="page-title">
+              <div class="row">
+                <div class="col-6">
+                  <h3>Nutritional Status</h3>
+                </div>
+                <div class="col-6">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">
+                    <i data-feather="home"></i></a></li>
+                    <li class="breadcrumb-item">Nutritional Status</li>
+                    <li class="breadcrumb-item active">Add New Data</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+            <!--begin::row-->
+            <div class="row">
+
+             
+
+                <div class="col-md-12 project-list">
+                <div class="card">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <ul class="nav nav-tabs border-tab" id="top-tab" role="tablist">
+                        <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-bs-toggle="tab" href="#top-home" role="tab" aria-controls="top-home" aria-selected="true"><i data-feather="target"></i>Children Nutritional Status</a></li>
+                      </ul>
+                    </div>
+                    <div class="col-md-6">                    
+                      <div class="form-group mb-0 me-0"></div><a class="btn btn-primary" href="projectcreate.html"> <i data-feather="plus-square"> </i>Add New Data</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-xl-4">
+                <div class="card">
+                  <div class="card-header">
+                    <h5><i class="icofont icofont-filter me-2"></i>Filter Here</h5>
+                  </div>
+                  <div class="card-body">
+
+                    <div class="row">
+
+                      <div class="mb-2 col-xl-6">
+                        <div class="col-form-label">Province</div>
+                        <select class="js-example-basic-single col-sm-12" title="Select Country.">
+                            <option value="ADN">Agusan Del Norte</option>
+                            <option value="ADS">Agusan Del Sur</option>
+                            <option value="SDN">Surigao Del Norte</option>
+                            <option value="SDS">Surigao Del Sur</option>
+                            <option value="PDI">Province of Dinagat Islands</option>
+                          
+                        </select>
+                      </div>
+
+                      <div class="mb-2 col-xl-6">
+                        <div class="col-form-label">City</div>
+                        <select class="js-example-basic-single col-sm-12" title="Select Country.">
+                            
+                            <option value="WY">Peter</option>
+                            <option value="WY">Hanry Die</option>
+                            <option value="WY">John Doe</option>
+                          
+                        </select>
+                      </div>
+
+                      <div class="mb-2 col-xl-6">
+                        <div class="col-form-label">Barangay</div>
+                        <select class="js-example-basic-single col-sm-12" title="Select Country.">
+                            
+                            <option value="WY">Peter</option>
+                            <option value="WY">Hanry Die</option>
+                            <option value="WY">John Doe</option>
+                          
+                        </select>
+                      </div>
+
+
+                      <div class="mb-2 col-xl-6">
+                        <label class="col-sm-12 col-form-label">Purok</label>
+                            <div class="col-sm-12">
+                              <input class="form-control" type="text">
+                            </div>
+                      </div>
+
+                      <div class="mb-2 col-xl-12 mt-2">
+                      
+                            <div class="col-sm-12">
+                              <button class="btn btn-square btn-success btn-block" type="button" >Generate Form</button>
+                            </div>
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+                
+           
+
+
+            </div>
+            <!--end::row-->
+
+
+            <div class="row">
+
+              <div class="col-sm-12 col-xl-12">
+                <div class="card b-r-0">
+                  <div class="card-header">
+                    <h5>Flat Card</h5>
+                  
+                  </div>
+                  <div class="card-body">
+                    <!--begin::row-->
+                    <div class="row">
+
+                      <div class="mb-2 col-xl-3">
+                        <label class="col-sm-12 col-form-label">Purok / Area / Block</label>
+                            <div class="col-sm-12">
+                              <input class="form-control" type="text" readonly value="Bliss">
+                            </div>
+                      </div>
+
+                      <div class="mb-2 col-xl-3">
+                        <label class="col-sm-12 col-form-label">Barangay</label>
+                            <div class="col-sm-12">
+                              <input class="form-control" type="text" readonly value="Libertad">
+                            </div>
+                      </div>
+
+                      <div class="mb-2 col-xl-3">
+                        <label class="col-sm-12 col-form-label">City</label>
+                            <div class="col-sm-12">
+                              <input class="form-control" type="text" readonly value="City of Butuan">
+                            </div>
+                      </div>
+
+                      <div class="mb-2 col-xl-3">
+                        <label class="col-sm-12 col-form-label">Province</label>
+                            <div class="col-sm-12">
+                              <input class="form-control" type="text" readonly value="Agusan Del Norte">
+                            </div>
+                      </div>
+
+                    </div>
+                    <!--end::row-->
+
+                    <div class="row mt-3">
+                      <div id="basicScenario"></div>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            
+   
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        {% include '../../layouts/footer.html' %}
+      </div>
+    </div>
+    {% include '../../inc/include_js.html' %}
+    <script src="{% static 'assets/js/jsgrid/jsgrid.min.js' %}"></script>
+    <script src="{% static 'assets/js/jsgrid/griddata.js' %}"></script>
+    <script src="{% static 'assets/js/jsgrid/jsgrid.js' %}"></script>
+    {% endblock %}
+  </body>
+</html>
