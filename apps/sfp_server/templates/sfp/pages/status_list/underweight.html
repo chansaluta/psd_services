@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
+    <title>PSD Services - SFP | Underweight Children </title>
+    {% include '../../inc/include_css.html' %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/datatables.css' %}">
+  </head>
+  <body onload="startTime()">
+    <div class="loader-wrapper">
+      <div class="loader-index"><span></span></div>
+      <svg>
+        <defs></defs>
+        <filter id="goo">
+          <fegaussianblur in="SourceGraphic" stddeviation="11" result="blur"></fegaussianblur>
+          <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo"> </fecolormatrix>
+        </filter>
+      </svg>
+    </div>
+    <!-- tap on top starts-->
+    <div class="tap-top"><i data-feather="chevrons-up"></i></div>
+    <!-- tap on tap ends-->
+    <!-- page-wrapper Start-->
+    <div class="page-wrapper compact-wrapper" id="pageWrapper">
+        {% include '../../layouts/header.html' %}
+      <!-- Page Body Start-->
+      <div class="page-body-wrapper">
+        {% include '../../layouts/sidebar.html' %}
+
+        
+        <div class="page-body">
+          <div class="container-fluid">        
+            <div class="page-title">
+              <div class="row">
+                <div class="col-6">
+                  <h3>Underweight Children</h3>
+                </div>
+                <div class="col-6">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">
+                    <i data-feather="layers"></i></a></li>
+                    <li class="breadcrumb-item">Children Status List</li>
+                    <li class="breadcrumb-item active">Underweight Children  </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Container-fluid starts-->
+          <div class="container-fluid">
+
+            <div class="row">
+
+            
+
+                             <!-- Server Side Processing start-->
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Underweight Children</h5><span>Children Status List [Filter]</span>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                        <div class="mb-2 col-xl-3">
+                            <div class="col-form-label">Province</div>
+                            <select class="js-example-basic-single col-sm-12" title="Select Country.">
+                                <option value="ADN">Agusan Del Norte</option>
+                                <option value="ADS">Agusan Del Sur</option>
+                                <option value="SDN">Surigao Del Norte</option>
+                                <option value="SDS">Surigao Del Sur</option>
+                                <option value="PDI">Province of Dinagat Islands</option>
+                              
+                            </select>
+                          </div>
+    
+                          <div class="mb-2 col-xl-3">
+                            <div class="col-form-label">City</div>
+                            <select class="js-example-basic-single col-sm-12" title="Select Country.">
+                                
+                                <option value="WY">Butuan City</option>
+                                <option value="WY">Cabadbaran City</option>
+                                <option value="WY">Buenavista</option>
+                              
+                            </select>
+                          </div>
+    
+                          <div class="mb-2 col-xl-3">
+                            <div class="col-form-label">Barangay</div>
+                            <select class="js-example-basic-single col-sm-12" title="Select Country.">
+                                
+                                <option value="WY">Bliss</option>
+                                <option value="WY">Diego Silang</option>
+                                <option value="WY">Golden Ribbon</option>
+                              
+                            </select>
+                          </div>
+    
+    
+                          <div class="mb-2 col-xl-3">
+                            <label class="col-sm-12 col-form-label">Purok</label>
+                                <div class="col-sm-12">
+                                  <input class="form-control" type="text">
+                                </div>
+                          </div>
+                    </div>
+                    <!--begin::row-->
+                    <div class="row mt-5">
+                    <div class="table-responsive">
+                      <table class="display datatables" id="server-side-datatable">
+                        <thead>
+                          <tr>
+                            <th>Child Seq.</th>
+                            <th>Address</th>
+                            <th>Name of Mother or Caregiver</th>
+                            <th>Full Name of Child</th>
+                            <th>Sex</th>
+                            <th>Age in Mos.</th>
+                            <th>Weight for Age Classfn</th>
+                            <th>Weight (kg)</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                          </tr>
+                        </thead>
+                        <tfoot>
+                          <tr>
+                            <th>Child Seq.</th>
+                            <th>Address</th>
+                            <th>Name of Mother or Caregiver</th>
+                            <th>Full Name of Child</th>
+                            <th>Sex</th>
+                            <th>Age in Mos.</th>
+                            <th>Weight for Age Classfn</th>
+                            <th>Weight (kg)</th>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                            <th>4</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+
+                </div>
+                <!--end::row-->
+
+                  </div>
+                </div>
+              </div>
+              <!-- Server Side Processing end-->
+            
+
+
+
+            </div>
+            
+         
+          </div>
+          <!-- Container-fluid Ends-->
+        </div>
+        {% include '../../layouts/footer.html' %}
+      </div>
+    </div>
+
+    {% include '../../inc/include_js.html' %}
+
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+  </body>
+</html>
