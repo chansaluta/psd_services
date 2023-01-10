@@ -12,7 +12,7 @@
     <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
     <title>PSD Services - SFP | Nutritional Status Add Data </title>
-    {% include '../../inc/include_css.html' %}
+    {% include '../inc/include_css.html' %}
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/vendors/jsgrid.css' %}">
   </head>
   <body>
@@ -32,10 +32,10 @@
     <!-- tap on tap ends-->
     <!-- page-wrapper Start-->
     <div class="page-wrapper compact-wrapper" id="pageWrapper">
-        {% include '../../layouts/header.html' %}
+        {% include '../layouts/header.html' %}
       <!-- Page Body Start-->
       <div class="page-body-wrapper">
-        {% include '../../layouts/sidebar.html' %}
+        {% include '../layouts/sidebar.html' %}
 
         
         <div class="page-body">
@@ -72,13 +72,13 @@
                       </ul>
                     </div>
                     <div class="col-md-6">                    
-                      <div class="form-group mb-0 me-0"></div><a class="btn btn-primary" href="projectcreate.html"> <i data-feather="plus-square"> </i>Add New Data</a>
+                      <div class="form-group mb-0 me-0"></div><a class="btn btn-primary" id="new_status_tool"> <i data-feather="plus-square"> </i>Add New Data</a>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-12 col-xl-4">
+              <div class="col-sm-12 col-xl-4" id="filter_address" hidden>
                 <div class="card">
                   <div class="card-header">
                     <h5><i class="icofont icofont-filter me-2"></i>Filter Here</h5>
@@ -103,9 +103,9 @@
                         <div class="col-form-label">City</div>
                         <select class="js-example-basic-single col-sm-12" title="Select Country.">
                             
-                            <option value="WY">Peter</option>
-                            <option value="WY">Hanry Die</option>
-                            <option value="WY">John Doe</option>
+                          <option value="WY">Butuan City</option>
+                                <option value="WY">Cabadbaran City</option>
+                                <option value="WY">Buenavista</option>
                           
                         </select>
                       </div>
@@ -114,10 +114,9 @@
                         <div class="col-form-label">Barangay</div>
                         <select class="js-example-basic-single col-sm-12" title="Select Country.">
                             
-                            <option value="WY">Peter</option>
-                            <option value="WY">Hanry Die</option>
-                            <option value="WY">John Doe</option>
-                          
+                          <option value="WY">Bliss</option>
+                          <option value="WY">Diego Silang</option>
+                          <option value="WY">Golden Ribbon</option>
                         </select>
                       </div>
 
@@ -132,7 +131,7 @@
                       <div class="mb-2 col-xl-12 mt-2">
                       
                             <div class="col-sm-12">
-                              <button class="btn btn-square btn-success btn-block" type="button" >Generate Form</button>
+                              <button class="btn btn-square btn-success btn-block" type="button" id="generate_form" >Generate Form</button>
                             </div>
                       </div>
 
@@ -149,12 +148,12 @@
             <!--end::row-->
 
 
-            <div class="row">
+            <div class="row" hidden id="status_tool_table">
 
               <div class="col-sm-12 col-xl-12">
                 <div class="card b-r-0">
                   <div class="card-header">
-                    <h5>Flat Card</h5>
+                    <h5>Children Nutritional Status</h5>
                   
                   </div>
                   <div class="card-body">
@@ -206,10 +205,20 @@
           </div>
           <!-- Container-fluid Ends-->
         </div>
-        {% include '../../layouts/footer.html' %}
+        {% include '../layouts/footer.html' %}
       </div>
     </div>
-    {% include '../../inc/include_js.html' %}
+    {% include '../inc/include_js.html' %}
+    <script>
+      $('#new_status_tool').click( function() {
+        $('#filter_address').attr('hidden', false);
+      });
+
+      $('#generate_form').click(function(){
+        $('#status_tool_table').attr('hidden', false);
+        
+      });
+    </script>
     <script src="{% static 'assets/js/jsgrid/jsgrid.min.js' %}"></script>
     <script src="{% static 'assets/js/jsgrid/griddata.js' %}"></script>
     <script src="{% static 'assets/js/jsgrid/jsgrid.js' %}"></script>

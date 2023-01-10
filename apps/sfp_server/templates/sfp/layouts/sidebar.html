@@ -16,20 +16,57 @@
             </li>
             <li class="sidebar-main-title">
               <div>
-                <h6 class="lan-1">General</h6>
-                <p class="lan-2">Dashboards,widgets & layout.</p>
+                <h6 class="">General</h6>
+                <p class="">Dashboard, Status Tool & Children.</p>
               </div>
             </li>
            
-            <li class= "sidebar-list active"><a class="sidebar-link sidebar-title link-nav " href="knowledgebase.html"><i data-feather="home"> </i><span>Dashboard</span></a></li>
+            <li class= "sidebar-list active"><a class="sidebar-link sidebar-title link-nav " href="{% url 'dashboard' %}"><i data-feather="home"> </i><span>Dashboard</span></a></li>
 
-            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i data-feather="edit-3"></i><span>Nut. Status Tool</span></a>
+            <li class="sidebar-main-title">
+              <div>
+                <h6 class="">Tool</h6>
+                <p class="">Search, Add and Delete</p>
+              </div>
+            </li>
+
+            <li class= "sidebar-list active"><a class="sidebar-link sidebar-title link-nav " href="{% url 'nut_status_add_data' %}"><i data-feather="edit-3"> </i><span>Nut. Status Tool</span></a></li>
+
+            <li class= "sidebar-list active"><a class="sidebar-link sidebar-title link-nav " href="{% url 'summary' %}"><i data-feather="sidebar"> </i><span>Summary</span></a></li>
+
+
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i data-feather="layers"></i><span>Children Status List</span></a>
               <ul class="sidebar-submenu">
-                <li><a href="{% url 'nut_status_add_data' %}">Add New Data</a></li>
-                <li><a href="form-builder-2.html">Update Data</a></li>
-                <li><a href="button-builder.html">Generate Report</a></li>
+                <li><a href="{% url 'underweight_children' %}">Underweight</a></li>
+                <li><a href="{% url 'stunted_children' %}">Stunted</a></li>
+                <li><a href="{% url 'moderately_wasted_children' %}">Moderately Wasted</a></li>
+                <li><a href="{% url 'severely_underweight_children' %}">Severely Underweight</a></li>
+                <li><a href="{% url 'severely_stunted_children' %}">Severely Stunted</a></li>
+                <li><a href="{% url 'severely_wasted_children' %}">Severely Wasted</a></li>
               </ul>
             </li>
+
+            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="#"><i data-feather="file-text"></i><span>OPT Forms</span></a>
+              <ul class="sidebar-submenu">
+                <li><a href="#">Form1-A</a></li>
+                <li><a href="#">Form1-B</a></li>
+            
+              </ul>
+            </li>
+
+        
+
+            <li class="sidebar-main-title">
+              <div>
+                <h6 class="">Application</h6>
+                <p class="">Filter Data</p>
+              </div>
+            </li>
+
+            <li class= "sidebar-list active"><a class="sidebar-link sidebar-title link-nav " href="{% url 'summary' %}"><i data-feather="filter"> </i><span>Filter Data</span></a></li>
+
+
+
        
           </ul>
         </div>
