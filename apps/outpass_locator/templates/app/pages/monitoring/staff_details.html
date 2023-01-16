@@ -1,0 +1,68 @@
+
+{% extends '../../layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+<!--begin::Container-->
+<div class="container-fluid">
+
+  <!--begin::row-->
+  <div class="row">
+    
+     <!-- Server Side Processing start-->
+     <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5>All PSD Staff Details</h5>
+          <div class="col-sm-12 col-xl-4 mt-2">
+            
+            <dl>
+              <dt>Legend</dt>
+              <dd><i class="fa fa-check-circle txt-primary m-r-10" ></i>Office - <em>At office on duty.</em></dd>
+              <dd><i class="fa fa-clock-o txt-success m-r-10"></i>Outpass  - <em>At office on duty but still uses outpass for the meantime.</em></dd>
+              <dd><i class="fa fa-share-square-o txt-danger m-r-10"></i>On Leave - <em>Staff On Leave.</em></dd>
+              
+              
+            </dl>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="display datatables" id="all_staff_details" data-url="{% url 'get_all_staff_details' %}">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                    <th>Position</th>
+                    <th>Program</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Image</th>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Program</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Server Side Processing end-->
+
+
+
+  </div>
+  <!--end::row-->
+ 
+
+</div>
+<!--end::Container-->
+
+{% endblock %}

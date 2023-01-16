@@ -1,0 +1,62 @@
+
+{% extends '../../layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+<!--begin::Container-->
+<div class="container-fluid">
+
+  <!--begin::row-->
+  <div class="row">
+    
+    <!-- Server Side Processing start-->
+    <div class="col-sm-12">
+     <div class="card">
+       <div class="card-header">
+         <h5>All PSD Staff Outpass Logs</h5>
+         
+       </div>
+       <div class="card-body">
+         <div class="table-responsive">
+           <table class="display datatables" id="staff_outpass_logs" data-url="{% url 'get_staff_outpass_logs' %}">
+             <thead>
+               <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Program</th>
+                  <th>Status</th>
+                  <th>Inclusive Date</th>
+                  <th>Check Out</th>
+                  <th>Check In</th>
+                  <th>Time Span</th>
+                  <th>Actions</th>
+               </tr>
+             </thead>
+             <tfoot>
+               <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Program</th>
+                  <th>Status</th>
+                  <th>Inclusive Date</th>
+                  <th>Check Out</th>
+                  <th>Check In</th>
+                  <th>Time Span</th>
+                  <th>Actions</th>
+               </tr>
+             </tfoot>
+           </table>
+         </div>
+       </div>
+     </div>
+   </div>
+   <!-- Server Side Processing end-->
+ 
+  </div>
+
+</div>
+<!--end::Container-->
+
+{% endblock %}
