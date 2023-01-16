@@ -46,7 +46,7 @@ staff_outpass_logs_table.DataTable( {
                 var time_span = data;
                 var new_time_span = '';
                 var hours = time_span.slice(0, 1);
-                var minutes = time_span.slice(3,4);
+                var minutes = time_span.slice(2,4);
                 if(hours >= '1') {
                     new_time_span = hours + ' hour/s' + ' and ' + minutes + ' minute/s';
                 }
@@ -176,7 +176,7 @@ staff_outpass_logs_today_table.DataTable( {
                 var time_span = data;
                 var new_time_span = '';
                 var hours = time_span.slice(0, 1);
-                var minutes = time_span.slice(3,4);
+                var minutes = time_span.slice(2,4);
                 if(hours >= '1') {
                     new_time_span = hours + ' hour/s' + ' and ' + minutes + ' minute/s';
                 }

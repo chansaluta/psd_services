@@ -177,8 +177,8 @@ def scan_qr_outpass(request,id_number=None):
         qr_staff = outpass_locator_staff_details.objects.filter(id_number=id_number)
         current_date = strftime("%Y-%m-%d")
         t = time.localtime()
-        current_time = time.strftime("%I:%M", t)
-        timeformat = '%I:%M'
+        current_time = time.strftime("%H:%M", t)
+        timeformat = '%H:%M'
     for instance in qr_staff:
         status = instance.status
         auth_user_id = instance.auth_user_id
