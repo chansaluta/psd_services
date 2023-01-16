@@ -1,0 +1,412 @@
+
+{% extends '../../layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+<!--begin::Container-->
+<div class="container-fluid">
+
+  <!--begin::row-->
+  <div class="row">
+
+    <div class="col-sm-12 col-xl-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Staff Outpass Tracker by Program</h5>
+            <div class="card-header-right">
+                <button class='btn btn-primary' data-bs-toggle="modal" data-original-title="test" data-bs-target="#exampleModal">Scan QR Outpass</button>
+              </div>
+
+            <div class="col-sm-12 col-xl-4 mt-2">
+            
+                <dl>
+                  <dt>Legend</dt>
+                  <dd><i class="fa fa-check-circle txt-primary m-r-10" ></i>Office - <em>At office on duty.</em></dd>
+                  <dd><i class="fa fa-clock-o txt-success m-r-10"></i>Outpass  - <em>At office on duty but still uses outpass for the meantime.</em></dd>
+                  <dd><i class="fa fa-share-square-o txt-danger m-r-10"></i>On Leave - <em>Staff On Leave.</em></dd>
+                  
+                  
+                </dl>
+              </div>
+          </div>
+          <div class="card-body">
+            <div class="default-according" id="accordion1">
+
+            <div class='row'>
+                <div class='col-xl-6'>
+                    <div class="card">
+                        <div class="card-header bg-dark" id="headingSecretariat">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseSecretariat" aria-expanded="false" aria-controls="collapseSecretariat">Secretariat</button>
+                        </h5>
+                        </div>
+                        <div class="collapse " id="collapseSecretariat" aria-labelledby="headingSecretariat" data-bs-parent="#accordion1">
+                            <div class="card-body">
+                              
+                                    <div class='col-xl-8 mx-5'>
+                                        <div class="appointment-table table-responsive ms-5">
+                                            <table class="table table-bordernone">
+                                            <tbody>
+                                             {% for secretariat in secretariat_staff %}
+                                                <tr>
+                                                <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ secretariat.image.url }}" alt="Image description">
+                                                    <div class="status-circle bg-{{secretariat.get_color}}"></div>
+                                                </td>
+                                                <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ secretariat.get_fullname }}</span><span class="font-roboto">{{ secretariat.position }}</span></td>
+                                                
+                                                <td class="text-end">
+                                                    <div class="button btn btn-{{secretariat.get_color}}">{{ secretariat.get_status }}<i class="fa {{secretariat.get_icon}} ms-1"></i></div>
+                                                </td>
+                                                </tr>
+                                                {% endfor %}
+
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='col-xl-6'>
+                    <div class="card">
+                        <div class="card-header bg-info" id="headingMta">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse" data-bs-target="#collapseMta" aria-expanded="false" aria-controls="collapseMta">Minors Travelling Abroad Unit</button>
+                        </h5>
+                        </div>
+                        <div class="collapse" id="collapseMta" aria-labelledby="headingMta" data-bs-parent="#accordion1">
+                        <div class="card-body">
+
+                            <div class='col-xl-8 mx-5'>
+                                <div class="appointment-table table-responsive ms-5">
+                                    <table class="table table-bordernone">
+                                    <tbody>
+                                        {% for mta in mta_staff %}
+                                        <tr>
+                                        <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ mta.image.url }}" alt="Image description">
+                                            <div class="status-circle bg-{{mta.get_color}}"></div>
+                                        </td>
+                                        <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ mta.get_fullname }}</span><span class="font-roboto">{{ mta.position }}</span></td>
+                                        
+                                        <td class="text-end">
+                                            <div class="button btn btn-{{mta.get_color}}">{{ mta.get_status }}<i class="fa {{mta.get_icon}} ms-1"></i></div>
+                                        </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                    </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class='row mt-5'>
+                <div class='col-xl-6'>
+                    <div class="card">
+                        <div class="card-header bg-secondary" id="headingArrs">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseArrs" aria-expanded="false" aria-controls="collapseArrs">Adoption Resource and Referral Unit</button>
+                        </h5>
+                        </div>
+                        <div class="collapse " id="collapseArrs" aria-labelledby="headingArrs" data-bs-parent="#accordion1">
+                            <div class="card-body">
+                                
+                               <div class='col-xl-8 mx-5'>
+                                    <div class="appointment-table table-responsive ms-5">
+                                        <table class="table table-bordernone">
+                                        <tbody>
+                                            {% for arrs in arrs_staff %}
+                                            <tr>
+                                            <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ arrs.image.url }}" alt="Image description">
+                                                <div class="status-circle bg-{{arrs.get_color}}"></div>
+                                            </td>
+                                            <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ arrs.get_fullname }}</span><span class="font-roboto">{{ arrs.position }}</span></td>
+                                            
+                                            <td class="text-end">
+                                                <div class="button btn btn-{{arrs.get_color}}">{{ arrs.get_status }}<i class="fa {{arrs.get_icon}} ms-1"></i></div>
+                                            </td>
+                                            </tr>
+                                            {% endfor %}
+    
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div> 
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='col-xl-6'>
+                    <div class="card">
+                        <div class="card-header bg-success" id="headingSectoral">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseSectoral" aria-expanded="false" aria-controls="collapseSectoral">Sectoral Unit</button>
+                        </h5>
+                        </div>
+                        <div class="collapse" id="collapseSectoral" aria-labelledby="headingSectoral" data-bs-parent="#accordion1">
+                            <div class="card-body">
+
+
+                                <div class='col-xl-8 mx-5'>
+                                    <div class="appointment-table table-responsive ms-5">
+                                        <table class="table table-bordernone">
+                                        <tbody>
+                                            {% for sectoral in sectoral_staff %}
+                                            <tr>
+                                            <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ sectoral.image.url }}" alt="Image description">
+                                                <div class="status-circle bg-{{sectoral.get_color}}"></div>
+                                            </td>
+                                            <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ sectoral.get_fullname }}</span><span class="font-roboto">{{ sectoral.position }}</span></td>
+                                            
+                                            <td class="text-end">
+                                                <div class="button btn btn-{{sectoral.get_color}}">{{ sectoral.get_status }}<i class="fa {{sectoral.get_icon}} ms-1"></i></div>
+                                            </td>
+                                            </tr>
+                                            {% endfor %}
+    
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class='row mt-5'>
+                <div class='col-xl-6'>
+                    <div class="card">
+                        <div class="card-header bg-warning" id="headingCbu">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseCbu" aria-expanded="false" aria-controls="collapseCbu">Capacity Building Unit</button>
+                        </h5>
+                        </div>
+                        <div class="collapse " id="collapseCbu" aria-labelledby="headingCbu" data-bs-parent="#accordion1">
+                            <div class="card-body">
+
+
+                                <div class='col-xl-8 mx-5'>
+                                    <div class="appointment-table table-responsive ms-5">
+                                        <table class="table table-bordernone">
+                                        <tbody>
+                                            {% for cbu in cbu_staff %}
+                                            <tr>
+                                            <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ cbu.image.url }}" alt="Image description">
+                                                <div class="status-circle bg-{{cbu.get_color}}"></div>
+                                            </td>
+                                            <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ cbu.get_fullname }}</span><span class="font-roboto">{{ cbu.position }}</span></td>
+                                            
+                                            <td class="text-end">
+                                                <div class="button btn btn-{{cbu.get_color}}">{{ cbu.get_status }}<i class="fa {{cbu.get_icon}} ms-1"></i></div>
+                                            </td>
+                                            </tr>
+                                            {% endfor %}
+    
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='col-xl-6'>
+                    <div class="card">
+                        <div class="card-header bg-danger" id="headingRrptp">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse" data-bs-target="#collapseRrptp" aria-expanded="false" aria-controls="collapseRrptp">RRPTP Unit</button>
+                        </h5>
+                        </div>
+                        <div class="collapse" id="collapseRrptp" aria-labelledby="headingRrptp" data-bs-parent="#accordion1">
+                            <div class="card-body">
+
+                                <div class='col-xl-8 mx-5'>
+                                    <div class="appointment-table table-responsive ms-5">
+                                        <table class="table table-bordernone">
+                                        <tbody>
+                                            {% for rrptp in rrptp_staff %}
+                                            <tr>
+                                            <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ rrptp.image.url }}" alt="Image description">
+                                                <div class="status-circle bg-{{rrptp.get_color}}"></div>
+                                            </td>
+                                            <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ rrptp.get_fullname }}</span><span class="font-roboto">{{ rrptp.position }}</span></td>
+                                            
+                                            <td class="text-end">
+                                                <div class="button btn btn-{{rrptp.get_color}}">{{ rrptp.get_status }}<i class="fa {{rrptp.get_icon}} ms-1"></i></div>
+                                            </td>
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class='row mt-5'>
+                <div class='col-xl-6'>
+                    <div class="card">
+                        <div class="card-header bg-info" id="headingSocpen">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseSocpen" aria-expanded="false" aria-controls="collapseSocpen">Social Pension Unit</button>
+                        </h5>
+                        </div>
+                        <div class="collapse " id="collapseSocpen" aria-labelledby="headingSocpen" data-bs-parent="#accordion1">
+                            <div class="card-body">
+
+                                <div class='col-xl-8 mx-5'>
+                                    <div class="appointment-table table-responsive ms-5">
+                                        <table class="table table-bordernone">
+                                        <tbody>
+                                            {% for socpen in socpen_staff %}
+                                            <tr>
+                                            <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ socpen.image.url }}" alt="Image description">
+                                                <div class="status-circle bg-{{socpen.get_color}}"></div>
+                                            </td>
+                                            <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ socpen.get_fullname }}</span><span class="font-roboto">{{ socpen.position }}</span></td>
+                                            
+                                            <td class="text-end">
+                                                <div class="button btn btn-{{socpen.get_color}}">{{ socpen.get_status }}<i class="fa {{socpen.get_icon}} ms-1"></i></div>
+                                            </td>
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class='col-xl-6'>
+                    <div class="card">
+                        <div class="card-header bg-primary" id="headingSfp">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed text-white" data-bs-toggle="collapse" data-bs-target="#collapseSfp" aria-expanded="false" aria-controls="collapseSfp">Supplementary Feeding Program Unit</button>
+                        </h5>
+                        </div>
+                        <div class="collapse" id="collapseSfp" aria-labelledby="headingSfp" data-bs-parent="#accordion1">
+                            <div class="card-body">
+
+                                <div class='col-xl-8 mx-5'>
+                                    <div class="appointment-table table-responsive ms-5">
+                                        <table class="table table-bordernone">
+                                        <tbody>
+                                            {% for sfp in sfp_staff %}
+                                            <tr>
+                                            <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ sfp.image.url }}" alt="Image description">
+                                                <div class="status-circle bg-{{sfp.get_color}}"></div>
+                                            </td>
+                                            <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ sfp.get_fullname }}</span><span class="font-roboto">{{ sfp.position }}</span></td>
+                                            
+                                            <td class="text-end">
+                                                <div class="button btn btn-{{sfp.get_color}}">{{ sfp.get_status }}<i class="fa {{sfp.get_icon}} ms-1"></i></div>
+                                            </td>
+                                            </tr>
+                                            {% endfor %}
+
+                                        </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  </div>
+  <!--end::row-->
+
+
+ 
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">QR Scanner</h5>
+                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+
+                            <div class='row'>
+
+                                <div>
+                                    <button class="btn btn-primary" id="startButton">Start</button>
+                                    <button class="btn btn-primary" id="resetButton">Reset</a>
+                                  </div>
+                                
+                                  <div id="sourceSelectPanel" style="display:none" class="mt-2">
+                                    <label for="sourceSelect" class=' fs-6 fw-bold'>Change video source:</label>
+                                    <select id="sourceSelect" style="max-width:400px">
+                                    </select>
+                                  </div>
+                                
+                                  <div style="display: table">
+                                    <label for="decoding-style" class=' fs-6 fw-bold'> Decoding Style:</label>
+                                    <select id="decoding-style" size="1">
+                                      <option value="once">Decode once</option>
+                                      <option value="continuously">Decode continuously</option>
+                                    </select>
+                                  </div>
+                                
+                                  <div>
+                                    <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
+                                  </div>
+                                
+                                  <label>Staff ID Number:</label>
+                                  <input type="text" id="result" readonly/>
+
+
+                            </div>
+
+                          </div>
+                          <div class="modal-footer">
+                            <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
+                          
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+ 
+
+</div>
+<!--end::Container-->
+
+{% endblock %}

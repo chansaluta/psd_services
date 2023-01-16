@@ -1,0 +1,174 @@
+{% load static %}
+    <!-- latest jquery-->
+    <script src="{% static 'assets/js/jquery-3.5.1.min.js' %}"></script>
+    <!-- Bootstrap js-->
+    <script src="{% static 'assets/js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <!-- feather icon js-->
+    <script src="{% static 'assets/js/icons/feather-icon/feather.min.js' %}"></script>
+    <script src="{% static 'assets/js/icons/feather-icon/feather-icon.js' %}"></script>
+    <!-- scrollbar js-->
+    <script src="{% static 'assets/js/scrollbar/simplebar.js' %}"></script>
+    <script src="{% static 'assets/js/scrollbar/custom.js' %}"></script>
+    <!-- Sidebar jquery-->
+    <script src="{% static 'assets/js/config.js' %}"></script>
+    <!-- Plugins JS start-->
+    <script src="{% static 'assets/js/sidebar-menu.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'assets/js/datatable/datatables/datatable.custom.js' %}"></script>
+    
+    <script src="{% static 'assets/js/select2/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/js/select2/select2-custom.js' %}"></script>
+    <script src="{% static 'assets/js/tooltip-init.js' %}"></script>
+    <script src="{% static 'assets/js/notify/bootstrap-notify.min.js' %}"></script>
+  
+    <script src="{% static 'assets/js/notify/index.js' %}"></script>
+    
+    <script src="{% static 'assets/js/prism/prism.min.js' %}"></script>
+    <script src="{% static 'assets/js/clipboard/clipboard.min.js' %}"></script>
+    <script src="{% static 'assets/js/counter/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/counter/jquery.counterup.min.js' %}"></script>
+    <script src="{% static 'assets/js/counter/counter-custom.js' %}"></script>
+    <script src="{% static 'assets/js/custom-card/custom-card.js' %}"></script>
+    <script src="{% static 'assets/js/datepicker/date-picker/datepicker.js' %}"></script>
+    <script src="{% static 'assets/js/datepicker/date-picker/datepicker.en.js' %}"></script>
+    <script src="{% static 'assets/js/datepicker/date-picker/datepicker.custom.js' %}"></script>
+
+    <script src="{% static 'assets/js/height-equal.js' %}"></script>
+
+    <!-- Plugins JS Ends-->
+    <!-- Theme js-->
+    <script type="text/javascript">
+        DJANGO_STATIC_URL = '{{ STATIC_URL }}';
+    </script>
+    <script src="{% static 'assets/js/script.js' %}"></script>
+    <script src="{% static 'assets/js/theme-customizer/customizer.js' %}"></script>
+    <script src="{% static 'assets/js/sweet-alert/sweetalert.min.js' %}"></script>
+    <script src="{% static 'outpass_locator/app.js' %}"> </script>
+
+    <script src="{% static 'outpass_locator/js/outpass_logs.js' %}"> </script>
+    <script src="{% static 'outpass_locator/js/by_program.js' %}"> </script>
+    
+
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest"></script>
+    <script type="text/javascript">
+
+   
+
+      function decodeOnce(codeReader, selectedDeviceId) {
+        codeReader.decodeFromInputVideoDevice(selectedDeviceId, 'video').then((result) => {
+          console.log(result)
+          document.getElementById('result').value = result.text
+
+   
+         
+
+          $.ajax({
+            url: '/outpass_locator/administrator/scan_qr_outpass/'+result.text+'/',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                swal("Status", "ID Number: "+result.text+" Successfully Updated Status!", "success");
+            },
+            error: function(error) {
+                console.log(error);
+            }
+            });
+          
+              
+          
+        }).catch((err) => {
+          console.error(err)
+          document.getElementById('result').textContent = err
+        })
+      }
+  
+      function decodeContinuously(codeReader, selectedDeviceId) {
+        codeReader.decodeFromInputVideoDeviceContinuously(selectedDeviceId, 'video', (result, err) => {
+          if (result) {
+            // properly decoded qr code
+            console.log('Found QR code!', result)
+            document.getElementById('result').textContent = result.text
+          }
+  
+          if (err) {
+            // As long as this error belongs into one of the following categories
+            // the code reader is going to continue as excepted. Any other error
+            // will stop the decoding loop.
+            //
+            // Excepted Exceptions:
+            //
+            //  - NotFoundException
+            //  - ChecksumException
+            //  - FormatException
+  
+            if (err instanceof ZXing.NotFoundException) {
+              console.log('No QR code found.')
+            }
+  
+            if (err instanceof ZXing.ChecksumException) {
+              console.log('A code was found, but it\'s read value was not valid.')
+            }
+  
+            if (err instanceof ZXing.FormatException) {
+              console.log('A code was found, but it was in a invalid format.')
+            }
+          }
+        })
+      }
+  
+      window.addEventListener('load', function () {
+        let selectedDeviceId;
+        const codeReader = new ZXing.BrowserQRCodeReader()
+        console.log('ZXing code reader initialized')
+  
+        codeReader.getVideoInputDevices()
+          .then((videoInputDevices) => {
+            const sourceSelect = document.getElementById('sourceSelect')
+            selectedDeviceId = videoInputDevices[0].deviceId
+            if (videoInputDevices.length >= 1) {
+              videoInputDevices.forEach((element) => {
+                const sourceOption = document.createElement('option')
+                sourceOption.text = element.label
+                sourceOption.value = element.deviceId
+                sourceSelect.appendChild(sourceOption)
+              })
+  
+              sourceSelect.onchange = () => {
+                selectedDeviceId = sourceSelect.value;
+              };
+  
+              const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+              sourceSelectPanel.style.display = 'block'
+            }
+  
+            document.getElementById('startButton').addEventListener('click', () => {
+  
+              const decodingStyle = document.getElementById('decoding-style').value;
+  
+              if (decodingStyle == "once") {
+                decodeOnce(codeReader, selectedDeviceId);
+              } else {
+                decodeContinuously(codeReader, selectedDeviceId);
+              }
+  
+              console.log(`Started decode from camera with id ${selectedDeviceId}`)
+            })
+  
+            document.getElementById('resetButton').addEventListener('click', () => {
+              codeReader.reset()
+              document.getElementById('result').textContent = '';
+
+              
+
+              console.log('Reset.')
+            })
+  
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      })
+    </script>
+  
+    <!-- login js-->
+    <!-- Plugin used-->

@@ -1,0 +1,154 @@
+
+{% extends '../../layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+<!--begin::Container-->
+<div class="container-fluid">
+
+  <!--begin::row-->
+  <div class="row">
+    
+    <div class="col-sm-12 col-xl-12">
+        <div class="card">
+        <div class="card-header">
+            <h5>Register Account</h5>
+         
+        </div>
+        <form action="{% url 'register_outpass_account' %}" method='POST'   enctype="multipart/form-data" >
+            {% csrf_token %}
+        <div class="card-body" id="registration_form">
+            <!--begin::row-->
+            <div class='row'>
+                <div class='col-xl-8'>
+                </div>
+                <div class='col-xl-4'>
+                    <div class="mb-3">
+                       
+                        <div class="input-group">
+                        <input class="form-control" type="text" id="search_employee" placeholder="Search staff......" ><span class="input-group-text"><i class="icofont icofont-ui-search"> </i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end::row-->
+
+            <!--begin::row-->
+            <div class='row'>
+
+             
+
+                <div class='col-xl-4'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">ID Number</label>
+                        <input class="form-control id_number" name="id_number" type="text" placeholder="id number">
+                    </div>
+                </div>
+
+                <div class='col-xl-4'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">Username</label>
+                        <input class="form-control username" name="username" type="text" placeholder="username">
+                    </div>
+                </div>
+
+                <div class='col-xl-4'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">Email</label>
+                        <input class="form-control email" name="email" type="text" placeholder="email">
+                    </div>
+                </div>
+
+              
+
+            </div>
+            <!--end::row-->
+
+
+            
+            <!--begin::row-->
+            <div class='row'>
+
+                <div class='col-xl-3'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">Firstname</label>
+                        <input class="form-control firstname" name="firstname" type="text" placeholder="firstname">
+                    </div>
+                </div>
+
+                <div class='col-xl-3'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">Middlename</label>
+                        <input class="form-control middlename" name="middlename" type="text" placeholder="middlename">
+                    </div>
+                </div>
+
+                <div class='col-xl-3'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">Lastname</label>
+                        <input class="form-control lastname" name="lastname" type="text" placeholder="lastname">
+                    </div>
+                </div>
+
+                <div class='col-xl-3'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlSelect9">Extension</label>
+                        <select class="form-select extension"  name="extension">
+                        <option value='-' selected="-">-</option>
+                        <option value='JR'>JR</option>
+                        <option value='SR'>SR</option>
+                        <option value='III'>III</option>
+                        <option value='IV'>IV</option>
+                        <option value='V'>V</option>
+                        </select>
+                    </div>
+                </div>
+              
+
+            </div>
+            <!--end::row-->
+
+
+             <!--begin::row-->
+             <div class='row'>
+
+                <div class='col-xl-6'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">Position</label>
+                        <input class="form-control position" name="position" type="text" placeholder="position">
+                    </div>
+                </div>
+
+        
+
+                <div class='col-xl-6'>
+                    <div class="mb-3">
+                        <label class="form-label" for="exampleFormControlInput1">Section</label>
+                        <input class="form-control section" name="section" type="text" placeholder="section">
+                    </div>
+                </div>
+
+              
+
+            </div>
+            <!--end::row-->
+            
+            <button class='btn btn-primary'>Submit</button>
+
+
+    
+        </div>
+    </form>
+
+        </div>
+    </div>
+
+
+  </div>
+  <!--end::row-->
+ 
+
+</div>
+<!--end::Container-->
+
+{% endblock %}

@@ -1,0 +1,120 @@
+
+{% extends '../../layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+<!--begin::Container-->
+<div class="container-fluid">
+
+  <!--begin::row-->
+  <div class="row">
+       <!-- Server Side Processing start-->
+       <div class="col-sm-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>All PSD Staff Details</h5>
+            <div class="col-sm-12 col-xl-4 mt-2">
+              
+              <dl>
+                <dt>Legend</dt>
+                <dd><i class="fa fa-check-circle txt-primary m-r-10" ></i>Office - <em>At office on duty.</em></dd>
+                <dd><i class="fa fa-clock-o txt-success m-r-10"></i>Outpass  - <em>At office on duty but still uses outpass for the meantime.</em></dd>
+                <dd><i class="fa fa-share-square-o txt-danger m-r-10"></i>On Leave - <em>Staff On Leave.</em></dd>
+                
+                
+              </dl>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="display datatables" id="by_program_staff_details" data-url="{% url 'get_staff_details_by_program' %}">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                      <th>Position</th>
+                      <th>Program</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>Image</th>
+                      <th>Name</th>
+                      <th>Position</th>
+                      <th>Program</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Server Side Processing end-->
+
+
+  </div>
+  <!--end::row-->
+
+
+<form action="{% url 'update_staff_status' %}" method="post">
+  {% csrf_token %}
+  <div class="modal fade" id="staff_status_update" tabindex="-1" role="dialog" aria-labelledby="StatusUpdate" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="StatusUpdate">Update Staff Status</h5>
+          <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type='text' class='id' hidden name='staff_id' />
+
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlInput1">Fullname</label>
+                <input class="form-control fullname"  type="text" >
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlInput1">Position</label>
+                <input class="form-control position"  type="text" >
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <label class="form-label" for="exampleFormControlSelect9">Status</label>
+                <select class="form-select status" name='staff_status' >
+                  <option  value='1'>Office</option>
+                  <option value='3'>On Leave</option>
+                  
+                </select>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
+          <button class="btn btn-secondary" type="submit">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+ 
+
+</div>
+<!--end::Container-->
+
+{% endblock %}

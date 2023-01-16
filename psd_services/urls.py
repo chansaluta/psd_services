@@ -21,4 +21,5 @@ urlpatterns = [
     path('mta_app/', include('apps.mta_server.urls')),
     path('rrptp_app/', include('apps.rrptp_server.urls')),
     path('sfp_app/', include('apps.sfp_server.urls')),
+    path('outpass_locator/', include('apps.outpass_locator.urls')),
 ]
