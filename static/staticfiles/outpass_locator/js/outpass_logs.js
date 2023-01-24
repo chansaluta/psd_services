@@ -1,9 +1,23 @@
-var staff_outpass_logs_table = $('#staff_outpass_logs');
+"use strict";
 
+var AdvanceFilterDatatable = function() {
 
-staff_outpass_logs_table.DataTable( {
-    responsive: true,
+    $.fn.dataTable.Api.register('column().title()', function() {
+		return $(this.header()).text().trim();
+	});
+
     
+
+
+    var initTableOutpass = function() {
+
+    var staff_outpass_logs_table = $('#staff_outpass_logs').DataTable({
+    responsive: true,
+    processing: true,
+    serverPaging: true,
+    serverFiltering: true,
+    pageSize: 10,
+    serverSorting: true,
     ajax: {
         url: $('#staff_outpass_logs').data('url'),
         contentType: 'application/json; charset=utf-8',
@@ -16,32 +30,75 @@ staff_outpass_logs_table.DataTable( {
             },
         },
     columns: [
-        {data: 'image'},
-        {data: {first_name: 'first_name',  last_name: 'last_name'},
-        render: function(data, type, full) {
-            return data.first_name +' '+ data.last_name;
-        }
-       },
+       {data: 'image'},
+       {data: 'full_name'},
        {data: 'position'},
        {data: 'program'},
-       {data: 'status'},
        {data: 'inclusive_dates'},
        {data: 'time_check_out'},
        {data: 'time_check_in'},
        {data: 'time_span_outpass'},
-       {data: {id: 'id'},
-       title: 'Actions',
-       orderable: false,
-       render: function(data, type, full, meta) {
-        return '\<i class="icofont icofont-ui-settings fs-4"></i>';
-       },
-    },
+       {data: 'month'},
+       {data: 'Actions', responsivePriority: 0 },
 
 
     ],
+
+    
+
+
+    initComplete: function() {
+        this.api().columns().every(function() {
+            var column = this;
+
+            switch (column.title()) {
+                
+                case 'Name':
+                    column.data().unique().sort().each(function(d, j) {
+                        $('.datatable-input[data-col-index="1"]').append('<option value="' + d + '">' + d + '</option>');
+                    });
+                    break;
+                
+                case 'Month':
+                            column.data().unique().sort().each(function(d, j) {
+                                $('.datatable-input[data-col-index="8"]').append('<option value="' + d + '">' + d + '</option>');
+                            });
+                            break;
+
+               
+                
+               
+
+            
+            }
+        });
+
+
+    
+    
+    },
+
+
     columnDefs: [
         {
-            targets: -2,
+            targets: 8,
+            render: function(data,type,full,meta) {
+                var month = data;
+                return ''+month+'';
+            }
+        },
+        
+      
+            {
+            targets: 9,
+            title: 'Actions',
+            orderable: false,
+                render: function(data, type, full, meta) {
+                    return '\<i class="icofont icofont-ui-settings fs-4"></i>';
+         },
+        },
+        {
+            targets: 7,
             render: function(data,type,full,meta) {
                 var time_span = data;
                 var new_time_span = '';
@@ -58,7 +115,7 @@ staff_outpass_logs_table.DataTable( {
         },
 
         {
-            targets: -3,
+            targets: 6,
             render: function(data,type,full,meta) {
                 var check_in = data;
                 var hours = check_in.slice(0,-3);
@@ -77,7 +134,7 @@ staff_outpass_logs_table.DataTable( {
         },
 
         {
-            targets: -4,
+            targets: 5,
             render: function(data,type,full,meta) {
                 var check_out = data;
                 var hours = check_out.slice(0,-3)
@@ -96,30 +153,88 @@ staff_outpass_logs_table.DataTable( {
         },
         {
             width: '50px',
-            targets: -10,
+            targets: -0,
             render: function(data,type,full,meta) {
                 return '<img class="img-fluid img-40 rounded-circle" src="/outpass_locator/media/'+data+'" alt="Image description">'
             },
         },
-        {
-            width: '75px',
-            targets: -6,
-            render: function(data, type,full, meta){
-                var status = {
-                    1: {'title': 'Active', 'class': 'primary', 'icon': 'fa-check-circle' },
-                    2: {'title': 'Outpass', 'class': 'success', 'icon': 'fa-clock-o'},
-                    3: {'title': 'On Leave', 'class': 'danger', 'icon': 'fa-share-square-o'},
-                    
-                };
-                if (typeof status[data] === 'undefined') {
-                    return data;
-                }
-                return '<a class="badge badge-'+status[data].class+'" href="#"><i class="fa '+status[data].icon+' m-r-5"></i>'+status[data].title+'</a>'
-
-            },
-        },
+     
     ],
 });
+
+
+
+$('#outpass_search').on('click', function(e) {
+    e.preventDefault();
+    var params = {};
+    
+ 
+    
+
+    $('.datatable-input').each(function() {
+        var i = $(this).data('col-index');
+        if (params[i]) {
+            params[i] += '|' + $(this).val();
+            
+        }
+        else {
+            params[i] = $(this).val();
+           
+        }
+    });
+    $.each(params, function(i, val) {
+        // apply search params to datatable
+        staff_outpass_logs_table.column(i).search(val ? val : '', false, false);
+    });
+    staff_outpass_logs_table.table().draw();
+});
+
+$('#outpass_reset').on('click', function(e) {
+			e.preventDefault();
+			$('.datatable-input').each(function() {
+				$(this).val('');
+				staff_outpass_logs_table.column($(this).data('col-index')).search('', false, false);
+			});
+			staff_outpass_logs_table.table().draw();
+		});
+
+$('#disabled-days').on('keydown', function (e) {
+    e.preventDefault();
+
+    var date = $('#advance_filter_outpass .outpass_dates').val();
+    var outpass_date_from = date.substring(0,10);
+    var outpass_date_to = date.substring(13,23);
+    
+
+    if(date != null) {
+    console.log(outpass_date_from);
+    console.log(outpass_date_to);
+    
+ 
+    staff_outpass_logs_table.column(4).search(outpass_date_from && outpass_date_to , true, true);
+    }
+    staff_outpass_logs_table.table().draw();
+    // staff_outpass_logs_table.table().draw();
+        
+});
+
+
+};
+
+return {
+    init: function() {
+        initTableOutpass();
+    },
+
+};
+
+
+}();
+
+jQuery(document).ready(function() {
+	AdvanceFilterDatatable.init();
+});
+
 
 
 
@@ -147,14 +262,9 @@ staff_outpass_logs_today_table.DataTable( {
         },
     columns: [
         {data: 'image'},
-        {data: {first_name: 'first_name',  last_name: 'last_name'},
-        render: function(data, type, full) {
-            return data.first_name +' '+ data.last_name;
-        }
-       },
+        {data: 'full_name'},
        {data: 'position'},
        {data: 'program'},
-       {data: 'status'},
        {data: 'inclusive_dates'},
        {data: 'time_check_out'},
        {data: 'time_check_in'},
@@ -226,27 +336,13 @@ staff_outpass_logs_today_table.DataTable( {
         },
         {
             width: '50px',
-            targets: -10,
+            targets: -9,
             render: function(data,type,full,meta) {
                 return '<img class="img-fluid img-40 rounded-circle" src="/outpass_locator/media/'+data+'" alt="Image description">'
             },
         },
-        {
-            width: '75px',
-            targets: -6,
-            render: function(data, type,full, meta){
-                var status = {
-                    1: {'title': 'Active', 'class': 'primary', 'icon': 'fa-check-circle' },
-                    2: {'title': 'Outpass', 'class': 'success', 'icon': 'fa-clock-o'},
-                    3: {'title': 'On Leave', 'class': 'danger', 'icon': 'fa-share-square-o'},
-                    
-                };
-                if (typeof status[data] === 'undefined') {
-                    return data;
-                }
-                return '<a class="badge badge-'+status[data].class+'" href="#"><i class="fa '+status[data].icon+' m-r-5"></i>'+status[data].title+'</a>'
-
-            },
-        },
+   
     ],
 });
+
+

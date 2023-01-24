@@ -34,6 +34,8 @@ urlpatterns = [
     path('ajax/staff_status_update/<pk>/', staff_status_update, name='staff_status_update'),
 
     path('ajax/update_staff_status/', update_staff_status, name='update_staff_status'),
+
+    path('ajax/get_outpass_leaderboard', get_outpass_leaderboard, name='get_outpass_leaderboard'),
     
 
     path('', login_user, name='login_user'),

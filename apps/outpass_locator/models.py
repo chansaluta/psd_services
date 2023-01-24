@@ -14,6 +14,7 @@ class outpass_locator_staff_details(models.Model):
     middle_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     ext_name = models.CharField(max_length=16)
+    full_name = models.CharField(max_length=128,null=True)
     position = models.CharField(max_length=32)
     status = models.IntegerField()
     program = models.CharField(max_length=64, null=True)
@@ -88,6 +89,7 @@ class outpass_locator_logs(models.Model):
     time_check_out = models.CharField(max_length=16)
     time_check_in = models.CharField(max_length=16)
     time_span_outpass = models.CharField(max_length=16)
+    month = models.CharField(max_length=12,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     class Meta:

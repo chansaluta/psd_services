@@ -9,8 +9,12 @@ from django.contrib import messages
 from datetime import datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
+from django.db import connection
+import numpy as np
 
-date_today = strftime("%Y-%m-%d")
+date_today = strftime("%m/%d/%Y")
+
 
 import time
 api_employee_url_any = 'https://caraga-portal.dswd.gov.ph/api/employee/list/search/?q='
@@ -28,10 +32,13 @@ def dashboard(request):
     on_leave_staff = outpass_locator_staff_details.objects.filter(status=3).count()
     staff_use_outpass = outpass_locator_logs.objects.all().count()
 
+    count_outpass = outpass_locator_logs.objects.values('id_number','user_id').annotate(Count('user_id')).order_by()
+
     context = {
         'active_user': active_staff,
         'staff_use_outpass': staff_use_outpass,
-        'on_leave_staff': on_leave_staff
+        'on_leave_staff': on_leave_staff,
+        'count_outpass': count_outpass
 
     }
 
@@ -115,6 +122,12 @@ def register_outpass_account(request):
     if request.method == "POST":
         pass_word = request.POST.get('id_number')
         encrypt_pass = make_password(pass_word)
+        
+        firstname = request.POST.get('firstname')
+        middlename = request.POST.get('middlename')
+        lastname = request.POST.get('lastname')
+
+        fullname = firstname + ' ' + middlename[1] + ' ' + lastname
     
     auth_user_register = User(
         username = request.POST.get('username'),
@@ -136,6 +149,7 @@ def register_outpass_account(request):
         middle_name = request.POST.get('middlename'),
         last_name = request.POST.get('lastname'),
         ext_name = request.POST.get('extension'),
+        full_name = fullname,
         position = request.POST.get('position'),
         status = 1,
         program =  request.POST.get('section'),
@@ -173,12 +187,15 @@ def scan_qr_outpass(request,id_number=None):
     template = "app/pages/monitoring/tracker.html"
     if id_number is not None:
 
-        daytreshold = "T20:00:00"
+        month_today = datetime.now()
+        months = ['zero','January','February','March','April','May','June','July','August','September','October','November','December']
+        current_month = months[month_today.month]
+        
         qr_staff = outpass_locator_staff_details.objects.filter(id_number=id_number)
-        current_date = strftime("%Y-%m-%d")
+        current_date = strftime("%m/%d/%Y")
         t = time.localtime()
-        current_time = time.strftime("%H:%M", t)
-        timeformat = '%H:%M'
+        current_time = time.strftime("%I:%M", t)
+        timeformat = '%I:%M'
     for instance in qr_staff:
         status = instance.status
         auth_user_id = instance.auth_user_id
@@ -193,7 +210,8 @@ def scan_qr_outpass(request,id_number=None):
                 user_id = auth_user_id,
                 outpass_locator_staff_details_id = id,
                 inclusive_dates = current_date,
-                time_check_out = current_time
+                time_check_out = current_time,
+                month = current_month
 
             )
             outpass_locator.save()
@@ -232,12 +250,12 @@ def get_staff_outpass_logs(request):
         select = {'id': 'outpass_locator_logs.id','first_name': 'outpass_locator_staff_details.first_name', 'middle_name': 'outpass_locator_staff_details.middle_name', 'last_name': 'outpass_locator_staff_details.last_name',
         'position': 'outpass_locator_staff_details.position', 'image': 'outpass_locator_staff_details.image', 'program': 'outpass_locator_staff_details.program','inclusive_dates': 'outpass_locator_logs.inclusive_dates',
         'time_check_out': 'outpass_locator_logs.time_check_out', 'time_check_in': 'outpass_locator_logs.time_check_in', 'time_span_outpass': 'outpass_locator_logs.time_span_outpass', 
-        'status': 'outpass_locator_staff_details.status'},
+        'status': 'outpass_locator_staff_details.status', 'month': 'outpass_locator_logs.month', 'full_name': 'outpass_locator_staff_details.full_name'},
         tables=['outpass_locator_logs', 'outpass_locator_staff_details'],
         where=['outpass_locator_logs.outpass_locator_staff_details_id = outpass_locator_staff_details.id']
     )
 
-    staff_outpass_logs_data = list(staff_outpass_logs.values('first_name','middle_name','last_name','position','image','program','inclusive_dates','time_check_out','time_check_in','time_span_outpass','status','id'))
+    staff_outpass_logs_data = list(staff_outpass_logs.values('full_name','month','first_name','middle_name','last_name','position','image','program','inclusive_dates','time_check_out','time_check_in','time_span_outpass','status','id'))
 
     data = {
         'data': staff_outpass_logs_data
@@ -254,12 +272,12 @@ def get_staff_outpass_today_logs(request):
         select = {'id': 'outpass_locator_logs.id','first_name': 'outpass_locator_staff_details.first_name', 'middle_name': 'outpass_locator_staff_details.middle_name', 'last_name': 'outpass_locator_staff_details.last_name',
         'position': 'outpass_locator_staff_details.position', 'image': 'outpass_locator_staff_details.image', 'program': 'outpass_locator_staff_details.program','inclusive_dates': 'outpass_locator_logs.inclusive_dates',
         'time_check_out': 'outpass_locator_logs.time_check_out', 'time_check_in': 'outpass_locator_logs.time_check_in', 'time_span_outpass': 'outpass_locator_logs.time_span_outpass', 
-        'status': 'outpass_locator_staff_details.status'},
+        'status': 'outpass_locator_staff_details.status', 'full_name': 'outpass_locator_staff_details.full_name'},
         tables=['outpass_locator_logs', 'outpass_locator_staff_details'],
-        where=['outpass_locator_logs.outpass_locator_staff_details_id = outpass_locator_staff_details.id']
+        where=['outpass_locator_logs.outpass_locator_staff_details_id = outpass_locator_staff_details.id', 'outpass_locator_logs.inclusive_dates = "' +date_today+ '"']
     )
 
-    staff_outpass_today_logs_data = list(staff_outpass_today_logs.values('first_name','middle_name','last_name','position','image','program','inclusive_dates','time_check_out','time_check_in','time_span_outpass','status','id'))
+    staff_outpass_today_logs_data = list(staff_outpass_today_logs.values('full_name','first_name','middle_name','last_name','position','image','program','inclusive_dates','time_check_out','time_check_in','time_span_outpass','status','id'))
 
     data = {
         'data': staff_outpass_today_logs_data
@@ -355,3 +373,31 @@ def update_staff_status(request):
         status_query.save()
 
     return redirect('staff_program')
+
+@login_required
+def get_outpass_leaderboard(request):
+
+
+
+    count_outpass_per_staff = ('SELECT  image , full_name, outpass_locator_logs.id_number, count(user_id) as outpass_count from outpass_locator_logs INNER JOIN outpass_locator_staff_details '+
+    'ON outpass_locator_staff_details.auth_user_id = outpass_locator_logs.user_id '+
+    'GROUP BY outpass_locator_logs.id_number, outpass_locator_staff_details.image,  outpass_locator_staff_details.full_name ORDER BY count(user_id) DESC LIMIT 5')
+
+    array_list = []
+    
+    cursor = connection.cursor()
+    cursor.execute(count_outpass_per_staff)
+    result = cursor.fetchall()
+    connection.commit()
+    
+    for row in result:
+        outpass_data = ({
+            'image': row[0],
+            'full_name': row[1],
+            'id_number': row[2],
+            'outpass_count': row[3]
+        })
+
+        array_list.append(outpass_data)
+
+    return JsonResponse(array_list,safe=False)
