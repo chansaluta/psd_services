@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'apps.rrptp_server',
     'apps.outpass_locator',
     'qr_code',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'psd_services.urls'
@@ -189,3 +191,5 @@ CACHES = {
 
 QR_CODE_CACHE_ALIAS = 'qr-code'
 
+
+CORS_ORIGIN_ALLOW_ALL = True
