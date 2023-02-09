@@ -5,7 +5,7 @@ from apps.sfp_server.views import *
 
 urlpatterns = [
     path('', index, name='sfp_page' ),
-    path('dashboard/', dashboard, name='dashboard' ),
+    path('dashboard/', dashboard, name='sfp_dashboard' ),
     # ! Status Tool Directory Path
     path('status_tool/', nut_status_add_data, name='nut_status_add_data'),
 

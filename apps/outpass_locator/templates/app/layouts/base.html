@@ -2,19 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cuba admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="pixelstrap">
+  
     <link rel="icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" type="image/x-icon">
 
-    <title>Outpass Locator | Information System</title>
+    <title>{% block title %}{% endblock title%}</title>
     {% include '../inc/include_css.html' %}
   </head>
-  <body onload="startTime()">
+  <body >
     <div class="loader-wrapper">
       <div class="loader-index"><span></span></div>
       <svg>
@@ -35,20 +30,58 @@
       <div class="page-body-wrapper">
         {% include './sidebar.html' %}
 
+
+        {% url 'dashboard' as dashboard_url %}
         
+        {% url 'staff_program' as staff_program_url %}
+        {% url 'staff_details' as staff_details_url %}
+        {% url 'tracker' as tracker_url %}
+
+        {% url 'today_outpass_logs' as today_outpass_logs_url %}
+        {% url 'all_outpass_logs' as all_outpass_logs_url %}
+        {% url 'program_outpass_logs' as program_outpass_logs_url %}
+
+
         <div class="page-body">
           <div class="container-fluid">        
             <div class="page-title">
               <div class="row">
                 <div class="col-6">
-                  <h3>Default</h3>
+
+                  <h3>
+                    {% if request.get_full_path == dashboard_url %}Dashboard{% endif %}
+
+                    {% if request.get_full_path == staff_program_url %}By Program Staff{% endif %}
+
+                    {% if request.get_full_path == staff_details_url %}All Staff{% endif %}
+
+                    {% if request.get_full_path == tracker_url %}Tracker View{% endif %}
+
+
+                    {% if request.get_full_path == today_outpass_logs_url %}Today's Logs{% endif %}
+
+                    {% if request.get_full_path == all_outpass_logs_url %}All Logs{% endif %}
+
+                    {% if request.get_full_path == program_outpass_logs_url %}By Program Logs{% endif %}
+
+
+                  </h3>
+
                 </div>
                 <div class="col-6">
                   <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">
                     <i data-feather="home"></i></a></li>
-                    <li class="breadcrumb-item">Dashboard</li>
-                    <li class="breadcrumb-item active">Default      </li>
+                    {% if request.get_full_path == dashboard_url or request.get_full_path == staff_program_url or request.get_full_path == staff_details_url or request.get_full_path == tracker_url or request.get_full_path == today_outpass_logs_url or request.get_full_path == all_outpass_logs_url or request.get_full_path == program_outpass_logs_url  %}
+                    <li class="breadcrumb-item">General</li>{% endif %}
+                     
+
+                    {% if request.get_full_path == dashboard_url %}<li class="breadcrumb-item">Dashboard</li>{% endif %}
+
+                    {% if request.get_full_path == staff_program_url or request.get_full_path == staff_details_url or request.get_full_path == tracker_url %}<li class="breadcrumb-item">Staff Monitoring</li>{% endif %}
+
+                    {% if request.get_full_path == today_outpass_logs_url or request.get_full_path == all_outpass_logs_url or request.get_full_path == program_outpass_logs_url %}<li class="breadcrumb-item">Outpass Logs</li>{% endif %}
+                    
                   </ol>
                 </div>
               </div>
@@ -58,7 +91,7 @@
           
           {% block content %}
 
-          {% endblock %}
+          {% endblock content %}
           
           <!-- Container-fluid Ends-->
         </div>
@@ -66,5 +99,10 @@
       </div>
     </div>
    {% include '../inc/include_js.html' %}
+
+
+   {% block script %}
+
+   {% endblock script %}
   </body>
 </html>

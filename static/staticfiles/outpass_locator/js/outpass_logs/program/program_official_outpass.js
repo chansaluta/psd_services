@@ -1,6 +1,6 @@
 "use strict";
 
-var AdvanceFilterDatatable = function() {
+var OfficialAdvanceFilterDatatable = function() {
 
     $.fn.dataTable.Api.register('column().title()', function() {
 		return $(this.header()).text().trim();
@@ -9,9 +9,9 @@ var AdvanceFilterDatatable = function() {
     
 
 
-    var initTableOutpass = function() {
+    var OfficialinitTableOutpass = function() {
 
-    var staff_outpass_logs_table = $('#staff_outpass_logs').DataTable({
+    var program_official_outpass_logs_table = $('#program_official_outpass_logs').DataTable({
     responsive: true,
     processing: true,
     serverPaging: true,
@@ -19,7 +19,7 @@ var AdvanceFilterDatatable = function() {
     pageSize: 10,
     serverSorting: true,
     ajax: {
-        url: $('#staff_outpass_logs').data('url'),
+        url: $('#program_official_outpass_logs').data('url'),
         contentType: 'application/json; charset=utf-8',
         datatype: 'json',
     
@@ -39,7 +39,9 @@ var AdvanceFilterDatatable = function() {
        {data: 'time_check_in'},
        {data: 'time_span_outpass'},
        {data: 'month'},
-       {data: 'Actions', responsivePriority: 0 },
+       {data: 'destination'},
+       {data: 'remarks'},
+       {data: {id: 'id', user_id: 'user_id'},},
 
 
     ],
@@ -55,13 +57,13 @@ var AdvanceFilterDatatable = function() {
                 
                 case 'Name':
                     column.data().unique().sort().each(function(d, j) {
-                        $('.datatable-input[data-col-index="1"]').append('<option value="' + d + '">' + d + '</option>');
+                        $('.datatable-input-official[data-col-index="1"]').append('<option value="' + d + '">' + d + '</option>');
                     });
                     break;
                 
                 case 'Month':
                             column.data().unique().sort().each(function(d, j) {
-                                $('.datatable-input[data-col-index="8"]').append('<option value="' + d + '">' + d + '</option>');
+                                $('.datatable-input-official[data-col-index="8"]').append('<option value="' + d + '">' + d + '</option>');
                             });
                             break;
 
@@ -90,11 +92,12 @@ var AdvanceFilterDatatable = function() {
         
       
             {
-            targets: 9,
+            targets: 11,
             title: 'Actions',
             orderable: false,
                 render: function(data, type, full, meta) {
-                    return '\<i class="icofont icofont-ui-settings fs-4"></i>';
+                    return '\<i style="cursor:pointer;" onclick="edit_remarks('+data.id+')" class="icofont icofont-ui-settings fs-4 me-2"></i>'+
+                            '<i style="cursor:pointer;" onclick="delete_outpass('+data.id+')" class="icofont icofont-ui-delete fs-4 me-2"></i>';
          },
         },
         {
@@ -152,8 +155,8 @@ var AdvanceFilterDatatable = function() {
             }
         },
         {
-            width: '50px',
-            targets: -0,
+            width: '20px',
+            targets: 0,
             render: function(data,type,full,meta) {
                 return '<img class="img-fluid img-40 rounded-circle" src="/outpass_locator/media/'+data+'" alt="Image description">'
             },
@@ -164,14 +167,14 @@ var AdvanceFilterDatatable = function() {
 
 
 
-$('#outpass_search').on('click', function(e) {
+$('#outpass_search_official').on('click', function(e) {
     e.preventDefault();
     var params = {};
     
  
     
 
-    $('.datatable-input').each(function() {
+    $('.datatable-input-official').each(function() {
         var i = $(this).data('col-index');
         if (params[i]) {
             params[i] += '|' + $(this).val();
@@ -184,24 +187,24 @@ $('#outpass_search').on('click', function(e) {
     });
     $.each(params, function(i, val) {
         // apply search params to datatable
-        staff_outpass_logs_table.column(i).search(val ? val : '', false, false);
+        program_official_outpass_logs_table.column(i).search(val ? val : '', false, false);
     });
-    staff_outpass_logs_table.table().draw();
+    program_official_outpass_logs_table.table().draw();
 });
 
-$('#outpass_reset').on('click', function(e) {
+$('#outpass_reset_official').on('click', function(e) {
 			e.preventDefault();
-			$('.datatable-input').each(function() {
+			$('.datatable-input-official').each(function() {
 				$(this).val('');
-				staff_outpass_logs_table.column($(this).data('col-index')).search('', false, false);
+				program_official_outpass_logs_table.column($(this).data('col-index')).search('', false, false);
 			});
-			staff_outpass_logs_table.table().draw();
+			program_official_outpass_logs_table.table().draw();
 		});
 
-$('#disabled-days').on('keydown', function (e) {
+$('#disabled-days-official').on('keydown', function (e) {
     e.preventDefault();
 
-    var date = $('#advance_filter_outpass .outpass_dates').val();
+    var date = $('#advance_filter_outpass_official .outpass_dates_official').val();
     var outpass_date_from = date.substring(0,10);
     var outpass_date_to = date.substring(13,23);
     
@@ -211,9 +214,9 @@ $('#disabled-days').on('keydown', function (e) {
     console.log(outpass_date_to);
     
  
-    staff_outpass_logs_table.column(4).search(outpass_date_from && outpass_date_to , true, true);
+    program_official_outpass_logs_table.column(4).search(outpass_date_from && outpass_date_to , true, true);
     }
-    staff_outpass_logs_table.table().draw();
+    program_official_outpass_logs_table.table().draw();
     // staff_outpass_logs_table.table().draw();
         
 });
@@ -223,7 +226,7 @@ $('#disabled-days').on('keydown', function (e) {
 
 return {
     init: function() {
-        initTableOutpass();
+        OfficialinitTableOutpass();
     },
 
 };
@@ -232,117 +235,50 @@ return {
 }();
 
 jQuery(document).ready(function() {
-	AdvanceFilterDatatable.init();
+	OfficialAdvanceFilterDatatable.init();
 });
 
 
 
 
 
-
-
-
-
-var staff_outpass_logs_today_table = $('#staff_outpass_today_logs');
-
-
-staff_outpass_logs_today_table.DataTable( {
-    responsive: true,
-    
-    ajax: {
-        url: $('#staff_outpass_today_logs').data('url'),
+function edit_remarks(data) {
+    $.ajax({
+        url: '/outpass_locator/view_remarks_official/'+data,
+        dataType: 'json',
+        type: 'GET',
         contentType: 'application/json; charset=utf-8',
-        datatype: 'json',
-    
-        data: {
-            pagination: {
-                perpage: 50,
-            },
-            },
-        },
-    columns: [
-        {data: 'image'},
-        {data: 'full_name'},
-       {data: 'position'},
-       {data: 'program'},
-       {data: 'inclusive_dates'},
-       {data: 'time_check_out'},
-       {data: 'time_check_in'},
-       {data: 'time_span_outpass'},
-       {data: {id: 'id'},
-       title: 'Actions',
-       orderable: false,
-       render: function(data, type, full, meta) {
-        return '\<i class="icofont icofont-ui-settings fs-4"></i>';
-       },
-    },
+        success: function (response) {
+            response.remarks_data.forEach(remarks_data => {
+                var firstname = remarks_data.first_name;
+                var lastname = remarks_data.last_name;
+
+     
+
+                var fullname = firstname + ' ' + lastname;
 
 
-    ],
-    columnDefs: [
-        {
-            targets: -2,
-            render: function(data,type,full,meta) {
-                var time_span = data;
-                var new_time_span = '';
-                var hours = time_span.slice(0, 1);
-                var minutes = time_span.slice(2,4);
-                if(hours >= '1') {
-                    new_time_span = hours + ' hour/s' + ' and ' + minutes + ' minute/s';
-                }
-                else {
-                    new_time_span = + minutes + ' minute/s';
-                }
-                return '<a class="badge badge-light text-dark" href="#">'+new_time_span+'</a>'
-            }
-        },
+                $('#outpass_remarks .fullname').val(fullname);
+                $('#outpass_remarks .id').val(remarks_data.id);
 
-        {
-            targets: -3,
-            render: function(data,type,full,meta) {
-                var check_in = data;
-                var hours = check_in.slice(0,-3);
-                var minutes = check_in.slice(3,5);
-                var ampm = '';
-                if(hours >= '08' && hours <= '11') {
-                    ampm = 'am'
-                }
-                else if(hours == '12' || hours >= '01' && hours <= '05'){
-                    ampm = 'pm'
-                }
-                
-
-                return '<a class="badge badge-success" href="#"><i class="fa fa-sign-in m-r-5"></i>'+hours+':'+minutes+' '+ampm+'</a>'
-            }
-        },
-
-        {
-            targets: -4,
-            render: function(data,type,full,meta) {
-                var check_out = data;
-                var hours = check_out.slice(0,-3)
-                var minutes = check_out.slice(3,5);
-                var ampm = '';
-                if(hours >= '08' && hours <= '11') {
-                    ampm = 'am'
-                }
-                else if(hours == '12' || hours >= '01' && hours <= '05'){
-                    ampm = 'pm'
-                }
-                
              
-                return '<a class="badge badge-info" href="#"><i class="fa fa-sign-out m-r-5"></i>'+hours+':'+minutes+' '+ampm+'</a>'
-            }
+                $('#outpass_remarks .destination').val(remarks_data.destination);
+                $('#outpass_remarks .remarks').val(remarks_data.remarks);
+                
+                
+
+                $('#outpass_remarks').modal('show');
+
+            
+               
+            });
+           
         },
-        {
-            width: '50px',
-            targets: -9,
-            render: function(data,type,full,meta) {
-                return '<img class="img-fluid img-40 rounded-circle" src="/outpass_locator/media/'+data+'" alt="Image description">'
-            },
-        },
-   
-    ],
-});
+        error: function(response) {
+            console.log(response.responseJSON.errors);
+        }
+
+    });
+}
 
 

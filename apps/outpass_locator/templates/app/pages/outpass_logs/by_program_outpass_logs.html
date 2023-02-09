@@ -5,7 +5,7 @@
 {% load static %}
 
 
-{% block title %}Outpass Locator | All Outpass Logs{% endblock title %}
+{% block title %}Outpass Locator | Program Outpass Logs{% endblock title %}
 {% block content %}
 
 <!--begin::Container-->
@@ -18,7 +18,10 @@
     <div class="col-sm-12">
      <div class="card">
        <div class="card-header">
-         <h5>All PSD Staff Outpass Logs</h5>
+         <h5>{{ user_program }} - Outpass Logs</h5>
+         <div class="card-header-right">
+         <button class="btn btn-primary">Generate Outpass Report</button>
+        </div>
          
        </div>
        <div class="card-body">
@@ -81,7 +84,7 @@
             </form>
     
              <div class="table-responsive">
-               <table class="display datatables" id="staff_official_outpass_logs" data-url="{% url 'get_staff_official_outpass_logs' %}">
+               <table class="display datatables" id="program_official_outpass_logs" data-url="{% url 'program_official_outpass_logs' %}">
                  <thead>
                    <tr>
                       <th>Image</th>
@@ -174,7 +177,7 @@
         </form>
 
          <div class="table-responsive">
-           <table class="display datatables" id="staff_personal_outpass_logs" data-url="{% url 'get_staff_personal_outpass_logs' %}">
+           <table class="display datatables" id="program_personal_outpass_logs" data-url="{% url 'program_personal_outpass_logs' %}">
              <thead>
                <tr>
                   <th>Image</th>
@@ -220,6 +223,67 @@
  
   </div>
 
+
+
+  <form action="{% url 'update_remarks_official_outpass' %}" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="outpass_remarks" tabindex="-1" role="dialog" aria-labelledby="OutpassUpdate" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="OutpassUpdate">Approve Outpass</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type='text' class='id' hidden name='outpass_id' />
+  
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <label class="form-label" >Fullname</label>
+                  <input class="form-control fullname"  type="text" >
+                </div>
+              </div>
+            </div>
+            
+
+            <div class="row mb-3">
+              <div class="col">
+                <label class="form-label required" >Destination</label>
+                <input class="form-control destination"  name="destination" type="text" >
+              </div>
+            </div>
+          
+
+            <div class="row mb-3">
+              <div class="col">
+                <label class="form-label required" >Activity to be Attended (Specify)</label>
+                <textarea class="form-control remarks" name="remarks" rows="2"></textarea>
+              </div>
+            </div>
+
+        
+
+            
+
+            
+  
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-secondary" type="submit">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+
+
+
+
+
 </div>
 <!--end::Container-->
 
@@ -228,8 +292,8 @@
 {% block script %}
 
 
-<script src="{% static 'outpass_locator/js/outpass_logs/all/official_all_logs.js' %}"> </script>
-<script src="{% static 'outpass_locator/js/outpass_logs/all/personal_all_logs.js' %}"> </script>
+<script src="{% static 'outpass_locator/js/outpass_logs/program/program_official_outpass.js' %}"> </script>
+<script src="{% static 'outpass_locator/js/outpass_logs/program/program_personal_outpass.js' %}"> </script>
 {% endblock script %}
 
 
