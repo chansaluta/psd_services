@@ -25,12 +25,15 @@ staff_details_by_program_table.DataTable( {
        {data: 'position'},
        {data: 'program'},
        {data: 'status'},
-       {data: {id: 'id'},
+       {data: {id: 'id',qr_code: 'qr_code'},
        targets: -1,
        title: 'Actions',
        orderable: false,
        render: function(data, type, full, meta) {
-        return '\<i style="cursor:pointer;" onclick="update_status('+data.id+')" class="icofont icofont-ui-settings fs-4"></i>';
+        return '<i style="cursor:pointer;" onclick="update_status('+data.id+')"  class="fa fa-gear fs-4 me-2"></i>'+
+               '<i style="cursor:pointer;" onclick="update_outpass('+data.id+')" class="fa fa-history fs-4 me-2"></i>'+
+               '<a href="/outpass_locator/media/'+data.qr_code+'"  download="/outpass_locator/media/'+data.qr_code+'"><i style="cursor:pointer;"  class="fa fa-download fs-4 me-2" ></i></a>'+
+               '<i style="cursor:pointer;" onclick="print_outpass('+data.id+')" class="fa fa-print fs-4"></i>';
        },
     },
 
@@ -49,9 +52,12 @@ staff_details_by_program_table.DataTable( {
             targets: -2,
             render: function(data, type,full, meta){
                 var status = {
-                    1: {'title': 'Active', 'class': 'primary', 'icon': 'fa-check-circle' },
-                    2: {'title': 'Outpass', 'class': 'success', 'icon': 'fa-clock-o'},
-                    3: {'title': 'On Leave', 'class': 'danger', 'icon': 'fa-share-square-o'},
+                    1: {'title': 'Office', 'class': 'primary', 'icon': 'fa-desktop' },
+                    2: {'title': 'Outpass', 'class': 'info', 'icon': 'fa-check-square' },
+                    3: {'title': 'Outpass Approved', 'class': 'success', 'icon': 'fa-clock-o'},
+                    4: {'title': 'RSO', 'class': 'danger', 'icon': 'fa-suitcase'},
+                    5: {'title': 'Travel', 'class': 'danger', 'icon': 'fa-plane'},
+                    6: {'title': 'On Leave', 'class': 'danger', 'icon': 'fa-share-square-o'},
                     
                 };
                 if (typeof status[data] === 'undefined') {
@@ -107,4 +113,93 @@ function update_status(data) {
         }
 
     });
+}
+
+
+
+
+
+function update_outpass(data) {
+    $.ajax({
+        url: '/outpass_locator/ajax/staff_status_update/'+data,
+        dataType: 'json',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            response.status_modal_data.forEach(status_modal_data => {
+                var firstname = status_modal_data.first_name;
+                var lastname = status_modal_data.last_name;
+
+                var fullname = firstname + ' ' + lastname;
+                var status = status_modal_data.status;
+
+                $('#staff_outpass_update .fullname').val(fullname);
+                $('#staff_outpass_update .position').val(status_modal_data.position);
+                $('#staff_outpass_update .id').val(status_modal_data.id);
+
+                if(status == 1){
+                    $('#staff_outpass_update .status').val('1');
+                }
+                else if(status == 3) {
+                    $('#staff_outpass_update .status').val('3');
+                }
+                
+                
+
+                $('#staff_outpass_update').modal('show');
+
+            
+               
+            });
+           
+        },
+        error: function(response) {
+            console.log(response.responseJSON.errors);
+        }
+
+    });
+}
+
+
+
+function print_outpass(data) {
+    $.ajax({
+        url: '/outpass_locator/ajax/staff_status_update/'+data,
+        dataType: 'json',
+        type: 'GET',
+        contentType: 'application/json; charset=utf-8',
+        success: function (response) {
+            response.status_modal_data.forEach(status_modal_data => {
+                var firstname = status_modal_data.first_name;
+                var lastname = status_modal_data.last_name;
+
+     
+
+                var fullname = firstname + ' ' + lastname;
+
+
+                $('#print_outpass .fullname').val(fullname);
+                $('#print_outpass .position').val(status_modal_data.position);
+
+                $('#print_outpass .id').val(status_modal_data.id);
+               
+
+             
+           
+                
+
+                $('#print_outpass').modal('show');
+
+            
+               
+            });
+           
+        },
+        error: function(response) {
+            console.log(response.responseJSON.errors);
+        }
+
+    });
+        
+
 }

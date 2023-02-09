@@ -1,6 +1,8 @@
 
 {% extends '../../layouts/base.html' %}
 {% load static %}
+
+{% block title %}Outpass Locator | Tracker{% endblock title %}
 {% block content %}
 
 <!--begin::Container-->
@@ -13,9 +15,7 @@
         <div class="card">
           <div class="card-header">
             <h5>Staff Outpass Tracker by Program</h5>
-            <div class="card-header-right">
-                <button class='btn btn-primary' data-bs-toggle="modal" data-original-title="test" data-bs-target="#exampleModal">Scan QR Outpass</button>
-              </div>
+         
 
             <div class="col-sm-12 col-xl-4 mt-2">
             
@@ -341,6 +341,49 @@
                         </div>
                     </div>
                 </div>
+
+
+                <div class='row mt-5'>
+                    <div class='col-xl-6'>
+                        <div class="card">
+                            <div class="card-header bg-success" id="headingCIS">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link text-white" data-bs-toggle="collapse" data-bs-target="#collapseCIS" aria-expanded="false" aria-controls="collapseCIS">Crisis Intervention Section</button>
+                            </h5>
+                            </div>
+                            <div class="collapse " id="collapseCIS" aria-labelledby="headingCIS" data-bs-parent="#accordion1">
+                                <div class="card-body">
+    
+                                    <div class='col-xl-8 mx-5'>
+                                        <div class="appointment-table table-responsive ms-5">
+                                            <table class="table table-bordernone">
+                                            <tbody>
+                                                {% for cis in cis_staff %}
+                                                <tr>
+                                                <td><img class="img-fluid img-40 rounded-circle mb-3" src="/outpass_locator{{ cis.image.url }}" alt="Image description">
+                                                    <div class="status-circle bg-{{cis.get_color}}"></div>
+                                                </td>
+                                                <td class="img-content-box"><span class="d-block fs-6 fw-bold">{{ cis.get_fullname }}</span><span class="font-roboto">{{ cis.position }}</span></td>
+                                                
+                                                <td class="text-end">
+                                                    <div class="button btn btn-{{cis.get_color}}">{{ cis.get_status }}<i class="fa {{cis.get_icon}} ms-1"></i></div>
+                                                </td>
+                                                </tr>
+                                                {% endfor %}
+    
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+    
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
             </div>
            
 
@@ -356,54 +399,6 @@
 
 
  
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">QR Scanner</h5>
-                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-
-                            <div class='row'>
-
-                                <div>
-                                    <button class="btn btn-primary" id="startButton">Start</button>
-                                    <button class="btn btn-primary" id="resetButton">Reset</a>
-                                  </div>
-                                
-                                  <div id="sourceSelectPanel" style="display:none" class="mt-2">
-                                    <label for="sourceSelect" class=' fs-6 fw-bold'>Change video source:</label>
-                                    <select id="sourceSelect" style="max-width:400px">
-                                    </select>
-                                  </div>
-                                
-                                  <div style="display: table">
-                                    <label for="decoding-style" class=' fs-6 fw-bold'> Decoding Style:</label>
-                                    <select id="decoding-style" size="1">
-                                      <option value="once">Decode once</option>
-                                      <option value="continuously">Decode continuously</option>
-                                    </select>
-                                  </div>
-                                
-                                  <div>
-                                    <video id="video" width="300" height="200" style="border: 1px solid gray"></video>
-                                  </div>
-                                
-                                  <label>Staff ID Number:</label>
-                                  <input type="text" id="result" readonly/>
-
-
-                            </div>
-
-                          </div>
-                          <div class="modal-footer">
-                            <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
-                          
-                          </div>
-                        </div>
-                      </div>
-                    </div>
  
 
 </div>

@@ -3,6 +3,8 @@
 
 {% extends '../layouts/base.html' %}
 {% load static %}
+
+{% block title %}Outpass Locator | Dashboard{% endblock title %}
 {% block content %}
 
 <!--begin::Container-->
@@ -252,12 +254,16 @@
 
 
   <div class="row">
+
+
     <div class="col-sm-12 col-xl-6">
       <div class="card">
+
         <div class="card-header bg-primary">
-          <h5 class='text-center' >Leaderboard Outpass Staff</h5>
+          <h5 class='text-center' >Leaderboard Personal Outpass Staff</h5>
           
         </div>
+
         <div class="card-body">
           
           <div class="table-responsive">
@@ -272,20 +278,54 @@
                   
                 </tr>
               </thead>
-              <tbody id="outpass_leaderboard_tbody">
+              <tbody id="personal_outpass_leaderboard_tbody">
                 
               </tbody>
             </table>
           </div>
-
-
         </div>
       </div>
     </div>
+
+
+    <div class="col-sm-12 col-xl-6">
+      <div class="card">
+
+        <div class="card-header bg-primary">
+          <h5 class='text-center' >Leaderboard Official Outpass Staff</h5>
+          
+        </div>
+
+        <div class="card-body">
+          
+          <div class="table-responsive">
+            <table class="table table-striped bg-primary">
+              <thead class="tbl-strip-thad-bdr">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Image</th>
+                  <th scope="col">Fullname</th>
+                  <th scope="col">ID Number</th>
+                  <th scope="col">Outpass Count</th>
+                  
+                </tr>
+              </thead>
+              <tbody id="official_outpass_leaderboard_tbody">
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
  
 
 
 </div>
 <!--end::Container-->
 
-{% endblock %}
+{% endblock content %}

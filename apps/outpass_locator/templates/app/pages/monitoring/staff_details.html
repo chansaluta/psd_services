@@ -1,6 +1,9 @@
 
 {% extends '../../layouts/base.html' %}
 {% load static %}
+
+{% block title %}Outpass Locator | All Staff{% endblock title %}
+
 {% block content %}
 
 <!--begin::Container-->
@@ -14,16 +17,29 @@
       <div class="card">
         <div class="card-header">
           <h5>All PSD Staff Details</h5>
-          <div class="col-sm-12 col-xl-4 mt-2">
-            
-            <dl>
-              <dt>Legend</dt>
-              <dd><i class="fa fa-check-circle txt-primary m-r-10" ></i>Office - <em>At office on duty.</em></dd>
-              <dd><i class="fa fa-clock-o txt-success m-r-10"></i>Outpass  - <em>At office on duty but still uses outpass for the meantime.</em></dd>
-              <dd><i class="fa fa-share-square-o txt-danger m-r-10"></i>On Leave - <em>Staff On Leave.</em></dd>
+          <div class="row">
+            <div class="col-xl-6 mt-2">
+
+              <ul class="list-group">
+                <li class="list-group-item"><i class="fa fa-desktop txt-primary m-r-10" ></i>Office - <em>At office on duty.</em></li>
+                <li class="list-group-item"><i class="fa fa-check-square txt-info m-r-10" ></i>Outpass - <em>Outpass is approved by section head. </em></li>
+                <li class="list-group-item"><i class="fa fa-clock-o txt-success m-r-10"></i>Outpass Approved - <em>At office on duty but still uses outpass for the meantime.</em></li>
+             
+               
+              </ul>
+         
+            </div>
+
+            <div class="col-xl-6 mt-2">
+
+              <ul class="list-group">
+                <li class="list-group-item"><i class="fa fa-suitcase txt-danger m-r-10" ></i>RSO - <em>Staff is on RSO.</em></li>
+                <li class="list-group-item"><i class="fa fa-plane txt-danger m-r-10" ></i>Travel - <em>Staff is on Travel/Field.</em></li>
+                <li class="list-group-item"><i class="fa fa-share-square-o txt-danger m-r-10"></i>On Leave - <em>Staff On Leave.</em></li>
               
-              
-            </dl>
+              </ul>
+         
+            </div>
           </div>
         </div>
         <div class="card-body">
@@ -60,9 +76,63 @@
 
   </div>
   <!--end::row-->
+
+
+
+  <form action="{% url 'outpass_approved_action' %}" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="approved_outpass" tabindex="-1" role="dialog" aria-labelledby="OutpassUpdate" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="OutpassUpdate">Approve Outpass</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type='text' class='id' hidden name='staff_id' />
+  
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <label class="form-label" >Fullname</label>
+                  <input class="form-control fullname"  type="text" >
+                </div>
+              </div>
+            </div>
+  
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <label class="form-label">Position</label>
+                  <input class="form-control position"  type="text" >
+                </div>
+              </div>
+            </div>
+
+            <input type="text" name="id_number" class="id_number" hidden />
+
+            
+  
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-secondary" type="submit">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
  
 
 </div>
 <!--end::Container-->
 
-{% endblock %}
+{% endblock content %}
+
+
+{% block script %}
+<script src="{% static 'outpass_locator/js/all_program.js' %}"> </script>
+
+
+
+{% endblock script %}

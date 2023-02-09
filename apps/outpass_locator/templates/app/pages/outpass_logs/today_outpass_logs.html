@@ -1,6 +1,10 @@
 
 {% extends '../../layouts/base.html' %}
 {% load static %}
+
+
+{% block title %}Outpass Locator | Today Outpass Logs{% endblock title %}
+
 {% block content %}
 
 <!--begin::Container-->
@@ -10,53 +14,127 @@
 <div class="row">
     
   <!-- Server Side Processing start-->
+  <!--begin::col-->
   <div class="col-sm-12">
    <div class="card">
      <div class="card-header">
-       <h5>All PSD Staff Outpass Logs</h5>
+       <h5>Today's PSD Staff Outpass Logs</h5>
        
      </div>
      <div class="card-body">
-       <div class="table-responsive">
-         <table class="display datatables" id="staff_outpass_today_logs" data-url="{% url 'get_staff_outpass_today_logs' %}">
-           <thead>
-             <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Program</th>
+
+
+      <ul class="nav nav-tabs border-tab" id="top-tab" role="tablist">
+        <li class="nav-item"><a class="nav-link active" id="official-outpass-tab" data-bs-toggle="tab" href="#official-outpass" role="tab" aria-controls="official-outpass" aria-selected="true"><i class="icofont icofont-ui-home"></i>Official Business Outpass</a></li>
+        <li class="nav-item"><a class="nav-link" id="personal-outpass-tab" data-bs-toggle="tab" href="#personal-outpass" role="tab" aria-controls="personal-outpass" aria-selected="false"><i class="icofont icofont-man-in-glasses"></i>Personal Business Outpass</a></li>
+        </ul>
+
+      <div class="tab-content" id="top-tabContent">
+
+        <div class="tab-pane fade show active" id="official-outpass" role="tabpanel" aria-labelledby="official-outpas-tab">
+          <h4>Official Business Outpass Logs (Today)</h4>
+           <!--begin::table-->
+           <div class="table-responsive">
+            <table class="display datatables" id="staff_official_outpass_today_logs" data-url="{% url 'get_staff_official_outpass_today_logs' %}">
+              <thead>
+                <tr>
+                   <th>Image</th>
+                   <th>Name</th>
+                   <th>Position</th>
+                   <th>Program</th>
+                   <th>Inclusive Date</th>
+                   <th>Check Out</th>
+                   <th>Check In</th>
+                   <th>Time Span</th>
+                   <th>Destinaton</th>
+                   <th>Remarks</th>
+                   <th>Actions</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                   <th>Image</th>
+                   <th>Name</th>
+                   <th>Position</th>
+                   <th>Program</th>
+                   <th>Inclusive Date</th>
+                   <th>Check Out</th>
+                   <th>Check In</th>
+                   <th>Time Span</th>
+                   <th>Destinaton</th>
+                   <th>Remarks</th>
+                   <th>Actions</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!--end::table-->
+        </div>
+
+        <div class="tab-pane fade" id="personal-outpass" role="tabpanel" aria-labelledby="personal-outpass-tab">
+          <h4>Personal Business Outpass Logs (Today)</h4>
+          <!--begin::table-->
+          <div class="table-responsive">
+            <table class="display datatables" id="staff_personal_outpass_today_logs" data-url="{% url 'get_staff_personal_outpass_today_logs' %}">
+              <thead>
+                <tr>
+                   <th>Image</th>
+                   <th>Name</th>
+                   <th>Position</th>
+                   <th>Program</th>
+        
+                   <th>Inclusive Date</th>
+                   <th>Check Out</th>
+                   <th>Check In</th>
+                   <th>Time Span</th>
+                   <th>Actions</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                   <th>Image</th>
+                   <th>Name</th>
+                   <th>Position</th>
+                   <th>Program</th>
+        
+                   <th>Inclusive Date</th>
+                   <th>Check Out</th>
+                   <th>Check In</th>
+                   <th>Time Span</th>
+                   <th>Actions</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!--end::table-->
+      
+    <!-- Server Side Processing end-->
+
+        </div>
+
      
-                <th>Inclusive Date</th>
-                <th>Check Out</th>
-                <th>Check In</th>
-                <th>Time Span</th>
-                <th>Actions</th>
-             </tr>
-           </thead>
-           <tfoot>
-             <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Program</th>
-     
-                <th>Inclusive Date</th>
-                <th>Check Out</th>
-                <th>Check In</th>
-                <th>Time Span</th>
-                <th>Actions</th>
-             </tr>
-           </tfoot>
-         </table>
-       </div>
-     </div>
-   </div>
- </div>
- <!-- Server Side Processing end-->
+
+      </div>
+        
+    </div>
+
+    </div>
+
+    </div>
+    <!--end::col-->
+
 
 </div>
+<!--end::row-->
 
 </div>
 <!--end::Container-->
 
-{% endblock %}
+{% endblock content %}
+
+{% block script %}
+
+<script src="{% static 'outpass_locator/js/outpass_logs/today/personal_today_logs.js' %}"> </script>
+<script src="{% static 'outpass_locator/js/outpass_logs/today/official_today_logs.js' %}"> </script>
+
+{% endblock script %}
